@@ -142,3 +142,51 @@ footer {
   padding: 20px;
   color: #666;
 }
+
+.participants {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.02), transparent 40%);
+  border-radius: 8px;
+}
+
+.participants-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 8px 6px 8px;
+}
+
+.participants-title {
+  font-weight: 600;
+  color: #333;
+}
+
+.participants-count {
+  display: inline-block;
+  min-width: 1.5em;
+  padding: 2px 8px;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #155724;
+  background: #d4edda;
+  border: 1px solid #c3e6cb;
+  border-radius: 999px;
+}
+
+.participants-list {
+  list-style: disc;
+  margin: 0 0 8px 28px;
+  /* 留出項目符號縮排 */
+  padding: 0;
+  max-height: 140px;
+  /* 清單過長可捲動 */
+  overflow: auto;
+}
+
+.participants-list li {
+  color: #444;
+  padding: 2px 0;
+  word-break: break-all;
+}

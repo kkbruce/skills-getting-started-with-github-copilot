@@ -15,18 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Populate activities list
       Object.entries(activities).forEach(([name, details]) => {
-        const activityCard = document.createElement("div");
-        activityCard.className = "activity-card";
-
-        const spotsLeft = details.max_participants - details.participants.length;
-
-        activityCard.innerHTML = `
-          <h4>${name}</h4>
-          <p>${details.description}</p>
-          <p><strong>Schedule:</strong> ${details.schedule}</p>
-          <p><strong>Availability:</strong> ${spotsLeft} spots left</p>
-        `;
-
+        const activityCard = createActivityCard(name, details);
         activitiesList.appendChild(activityCard);
 
         // Add option to select dropdown
@@ -39,6 +28,47 @@ document.addEventListener("DOMContentLoaded", () => {
       activitiesList.innerHTML = "<p>Failed to load activities. Please try again later.</p>";
       console.error("Error fetching activities:", error);
     }
+  }
+
+  // Create activity card element
+  function createActivityCard(name, activity) {
+    const card = document.createElement("div");
+    card.className = "activity-card";
+
+    const spotsLeft = activity.max_participants - activity.participants.length;
+
+    card.innerHTML = `
+      <h4>${name}</h4>
+      <p>${activity.description}</p>
+      <p><strong>Schedule:</strong> ${activity.schedule}</p>
+      <p><strong>Availability:</strong> ${spotsLeft} spots left</p>
+    `;
+
+    // Participants section (bulleted list)
+    const participants = Array.isArray(activity?.participants) ? activity.participants : [];
+    const participantsSection = document.createElement("section");
+    participantsSection.className = "participants";
+
+    participantsSection.innerHTML = `
+      <div class="participants-header">
+        <span class="participants-title">Participants</span>
+        <span class="participants-count" title="已報名">${participants.length}</span>
+      </div>
+      <ul class="participants-list">
+        ${participants.map((p) => `<li>${escapeHtml(p)}</li>`).join("")}
+      </ul>
+    `;
+
+    // 將 participants 區塊加入卡片
+    card.appendChild(participantsSection);
+
+    return card;
+  }
+
+  function escapeHtml(s) {
+    const div = document.createElement("div");
+    div.innerText = String(s ?? "");
+    return div.innerHTML;
   }
 
   // Handle form submission
